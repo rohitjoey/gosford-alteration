@@ -173,7 +173,7 @@ function renderLogin(app){
   app.innerHTML = `
     <div class="login-wrap">
       <div class="login-card">
-        <h1>Measure & Mend</h1>
+        <h1>Gosford Alterations</h1>
         <p class="sub">Sign in to open the order book</p>
         <div class="login-error" id="loginErr"></div>
         <input type="email" id="loginEmail" placeholder="Email" autocomplete="username" />
@@ -198,7 +198,7 @@ function renderList(app){
   app.innerHTML = `
     <header class="topbar">
       <div class="brand">
-        <h1>Measure<span class="stitch"></span>Mend</h1>
+       <h1>Gosford<span class="stitch"></span>Alterations</h1>
         <div class="header-actions">
           <button class="add-btn" id="btnAdd">+ New order</button>
         </div>

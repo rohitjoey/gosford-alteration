@@ -152,14 +152,28 @@ function render(){
     renderOverlay();
     return;
   }
+  if(document.getElementById('searchInput')){
+    updateListInPlace();
+    return;
+  }
   renderList(app);
+}
+
+function updateListInPlace(){
+  renderResults();
+  const c = counts();
+  document.querySelectorAll('.filter-chip').forEach(chip=>{
+    const countEl = chip.querySelector('.count');
+    if(countEl) countEl.textContent = c[chip.dataset.filter] ?? 0;
+    chip.classList.toggle('active', chip.dataset.filter === state.filter);
+  });
 }
 
 function renderLogin(app){
   app.innerHTML = `
     <div class="login-wrap">
       <div class="login-card">
-        <h1>Gosford Alterations</h1>
+        <h1>Measure & Mend</h1>
         <p class="sub">Sign in to open the order book</p>
         <div class="login-error" id="loginErr"></div>
         <input type="email" id="loginEmail" placeholder="Email" autocomplete="username" />
@@ -184,7 +198,7 @@ function renderList(app){
   app.innerHTML = `
     <header class="topbar">
       <div class="brand">
-        <h1>Gosford<span class="stitch"></span>Alterations</h1>
+        <h1>Measure<span class="stitch"></span>Mend</h1>
         <div class="header-actions">
           <button class="add-btn" id="btnAdd">+ New order</button>
         </div>
@@ -207,10 +221,27 @@ function renderList(app){
 
   document.getElementById('btnAdd').onclick = () => openForm(null);
   document.getElementById('btnSignOut').onclick = () => auth.signOut();
-  document.getElementById('searchInput').oninput = (e) => { state.search = e.target.value; render(); };
+  document.getElementById('searchInput').oninput = (e) => {
+    state.search = e.target.value;
+    renderResults();
+  };
   document.querySelectorAll('.filter-chip').forEach(chip=>{
     chip.onclick = () => { state.filter = chip.dataset.filter; render(); };
   });
+  attachCardHandlers();
+}
+
+function renderResults(){
+  const main = document.querySelector('main');
+  if(!main) return;
+  const list = getFiltered();
+  main.innerHTML = list.length === 0
+    ? renderEmpty()
+    : list.map(renderCard).join('');
+  attachCardHandlers();
+}
+
+function attachCardHandlers(){
   document.querySelectorAll('.order-card').forEach(card=>{
     card.onclick = (e) => {
       if(e.target.closest('.call-btn') || e.target.closest('.advance-btn')) return;

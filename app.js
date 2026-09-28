@@ -27,8 +27,8 @@ function smsHref(phone){
   return 'sms:' + String(phone).replace(/[^0-9+]/g,'');
 }
 
-function preBuiltMessageText(name,garment){
-  const message = `Hello%20${name}!I%20have%20finished%20altering%20your%20${garment?garment:"cloth"}.%20It%20is%20ready%20for%20pickup.%20Thank%20you.`
+function preBuiltMessageText(name, garment) {
+  const message = `Hello ${name}! I have finished altering your ${garment || "cloth"}. It is ready for pickup. Thank you.`;
   return encodeURIComponent(message);
 }
 

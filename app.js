@@ -23,6 +23,10 @@ function telHref(phone){
   return 'tel:' + String(phone).replace(/[^0-9+]/g,'');
 }
 
+function smsHref(phone){
+  return 'sms:' + String(phone).replace(/[^0-9+]/g,'');
+}
+
 function showToast(msg){
   const el = document.createElement('div');
   el.className = 'toast';
@@ -282,7 +286,7 @@ function renderCard(o){
           <span class="status-badge status-${o.status}">${STATUS_LABELS[o.status]}</span>
           <div class="card-actions">
             ${nextLabel ? `<button class="icon-btn advance-btn" data-id="${o.id}">${nextLabel}</button>` : ''}
-            <a class="icon-btn call-btn" href="${telHref(o.phone)}" title="Call ${escapeHtml(o.name)}">📞</a>
+            <a class="icon-btn call-btn" href="${smsHref(o.phone)}" title="Call ${escapeHtml(o.name)}">💬</a>
           </div>
         </div>
       </div>
@@ -357,7 +361,7 @@ function renderDetailOverlay(app){
         </div>
         <div class="pipeline-labels"><span>In progress</span><span>Ready</span><span>Picked up</span></div>
 
-        <a class="detail-call" href="${telHref(o.phone)}">📞 Call ${escapeHtml(o.name)}</a>
+        <a class="detail-call" href="${smsHref(o.phone)}">💬 Text ${escapeHtml(o.name)}</a>
 
         <div class="status-actions">
           <button data-s="progress" class="${o.status==='progress'?'active':''}">In progress</button>

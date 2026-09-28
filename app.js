@@ -28,7 +28,8 @@ function smsHref(phone){
 }
 
 function preBuiltMessageText(name,garment){
-  return `Hello%20${name}!I%20have%20finished%20altering%20your%20${garment?garment:"cloth"}.%20It%20is%20ready%20for%20pickup.%20Thank%20you.`
+  const message = `Hello%20${name}!I%20have%20finished%20altering%20your%20${garment?garment:"cloth"}.%20It%20is%20ready%20for%20pickup.%20Thank%20you.`
+  return encodeURIComponent(message);
 }
 
 function showToast(msg){
@@ -290,7 +291,7 @@ function renderCard(o){
           <span class="status-badge status-${o.status}">${STATUS_LABELS[o.status]}</span>
           <div class="card-actions">
             ${nextLabel ? `<button class="icon-btn advance-btn" data-id="${o.id}">${nextLabel}</button>` : ''}
-            <a class="icon-btn call-btn" href="${smsHref(o.phone)}?body=${preBuiltMessageText(o.name,o.garment)}" title="Call ${escapeHtml(o.name)}">💬</a>
+            <a class="icon-btn call-btn" href="${smsHref(o.phone)}?body=${preBuiltMessageText(o.name,o.garment)}" title="Text ${escapeHtml(o.name)}">💬</a>
           </div>
         </div>
       </div>

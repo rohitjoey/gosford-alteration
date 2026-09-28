@@ -290,7 +290,7 @@ function renderCard(o){
           <span class="status-badge status-${o.status}">${STATUS_LABELS[o.status]}</span>
           <div class="card-actions">
             ${nextLabel ? `<button class="icon-btn advance-btn" data-id="${o.id}">${nextLabel}</button>` : ''}
-            <a class="icon-btn call-btn" href="${smsHref(o.phone)}?body=${preBuiltMessageText}" title="Call ${escapeHtml(o.name)}">💬</a>
+            <a class="icon-btn call-btn" href="${smsHref(o.phone)}?body=${preBuiltMessageText(o.name,o.garment)}" title="Call ${escapeHtml(o.name)}">💬</a>
           </div>
         </div>
       </div>

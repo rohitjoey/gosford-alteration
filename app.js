@@ -27,8 +27,8 @@ function smsHref(phone){
   return 'sms:' + String(phone).replace(/[^0-9+]/g,'');
 }
 
-function preBuiltMessageText(name, garment) {
-  const message = `Hello ${name}! I have finished altering your ${garment || "cloth"}. It is ready for pickup. Thank you.`;
+function preBuiltMessageText(name, garment, price) {
+  const message = `Hello ${name}! I have finished altering your ${garment || "cloth"}. It is ready for pickup. Can you please bring $${price} cash. Thank you.`;
   return encodeURIComponent(message);
 }
 
@@ -291,7 +291,7 @@ function renderCard(o){
           <span class="status-badge status-${o.status}">${STATUS_LABELS[o.status]}</span>
           <div class="card-actions">
             ${nextLabel ? `<button class="icon-btn advance-btn" data-id="${o.id}">${nextLabel}</button>` : ''}
-            <a class="icon-btn call-btn" href="${smsHref(o.phone)}?body=${preBuiltMessageText(o.name,o.garment)}" title="Text ${escapeHtml(o.name)}">💬</a>
+            <a class="icon-btn call-btn" href="${smsHref(o.phone)}?body=${preBuiltMessageText(o.name, o.garment, o.price)}" title="Text ${escapeHtml(o.name)}">💬</a>
           </div>
         </div>
       </div>
@@ -366,7 +366,7 @@ function renderDetailOverlay(app){
         </div>
         <div class="pipeline-labels"><span>In progress</span><span>Ready</span><span>Picked up</span></div>
 
-        <a class="detail-call" href="${smsHref(o.phone)}?body=${preBuiltMessageText(o.name,o.garment)}">💬 Text ${escapeHtml(o.name)}</a>
+        <a class="detail-call" href="${smsHref(o.phone)}?body=${preBuiltMessageText(o.name, o.garment, o.price)}">💬 Text ${escapeHtml(o.name)}</a>
 
         <div class="status-actions">
           <button data-s="progress" class="${o.status==='progress'?'active':''}">In progress</button>
